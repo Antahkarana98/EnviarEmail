@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const inputEmail = document.querySelector('#email');
   const inputAsunto = document.querySelector('#asunto');
   const inputMensaje = document.querySelector('#mensaje');
+  const formulario = document.querySelector('#formulario');
 
   //agregando eventos a estos elementos
 
@@ -17,17 +18,25 @@ document.addEventListener('DOMContentLoaded', function () {
 
     //como saber si el campo ingresado esta vacio, trim es para eliminar espacios en blanco
     if(e.target.value.trim() === '') {
-      alertaError();
+      alertaError(`El campo ${e.target.id} es obligatorio`);
     } else{
       console.log("Tiene algo...");
     }
   }
 
-  function alertaError() {
+  function alertaError(mensaje) {
+
+    //Generamos alerta
     const error = document.createElement('P');
 
-    error.textContent = 'Hubo un error...';
-    console.log(error);
-    console.log(error);
+    error.textContent = mensaje;
+
+    //agregando clases de tailwind a la alerta de error
+
+    error.classList.add('bg-red-600', 'text-white', 'p-2', 'text-center');
+
+    //inyectando HTML en el formulario
+
+    formulario.appendChild(error);
   }
 })
