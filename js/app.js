@@ -18,13 +18,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     //como saber si el campo ingresado esta vacio, trim es para eliminar espacios en blanco
     if(e.target.value.trim() === '') {
-      alertaError(`El campo ${e.target.id} es obligatorio`);
+      alertaError(`El campo ${e.target.id} es obligatorio`, e.target.parentElement);
     } else{
       console.log("Tiene algo...");
     }
   }
 
-  function alertaError(mensaje) {
+  function alertaError(mensaje, referencia) {
 
     //Generamos alerta
     const error = document.createElement('P');
@@ -37,6 +37,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     //inyectando HTML en el formulario
 
-    formulario.appendChild(error);
+    referencia.appendChild(error);
   }
 })
