@@ -25,7 +25,12 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function alertaError(mensaje, referencia) {
+    //evitar que se generen alertas infinitas
+    const alerta = referencia.querySelector('.bg-red-600');
 
+    if(alerta){
+      alerta.remove();
+    }
     //Generamos alerta
     const error = document.createElement('P');
 
