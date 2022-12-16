@@ -13,12 +13,28 @@ document.addEventListener('DOMContentLoaded', function () {
   const inputMensaje = document.querySelector('#mensaje');
   const formulario = document.querySelector('#formulario');
   const btnSubmmit = document.querySelector('#formulario button[type="submit"]');
+  const btnReset = document.querySelector('#formulario button[type="reset"]');
 
   //agregando eventos a estos elementos
 
   inputEmail.addEventListener('input', validacion);
   inputAsunto.addEventListener('input', validacion);
   inputMensaje.addEventListener('input', validacion);
+
+  btnReset.addEventListener('click', function(e){
+    //prevenir la accion por defecto que en este caso es limpiar el formulario
+    e.preventDefault();
+
+    //limpiando el objeto
+    email.email = '';
+    email.asunto = '';
+    email.mensaje = '';
+
+    formulario.reset();
+
+    //validando si hay informacion
+    comprobarEmail();
+  });
 
 
   //funcion para validar los campos y optimizar el codigo
