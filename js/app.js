@@ -14,27 +14,36 @@ document.addEventListener('DOMContentLoaded', function () {
   const formulario = document.querySelector('#formulario');
   const btnSubmmit = document.querySelector('#formulario button[type="submit"]');
   const btnReset = document.querySelector('#formulario button[type="reset"]');
+  const spinner = document.querySelector('#spinner');
 
   //agregando eventos a estos elementos
 
   inputEmail.addEventListener('input', validacion);
   inputAsunto.addEventListener('input', validacion);
   inputMensaje.addEventListener('input', validacion);
+  formulario.addEventListener('submit', enviarEmail);
 
   btnReset.addEventListener('click', function(e){
     //prevenir la accion por defecto que en este caso es limpiar el formulario
     e.preventDefault();
 
-    //limpiando el objeto
-    email.email = '';
-    email.asunto = '';
-    email.mensaje = '';
-
-    formulario.reset();
-
-    //validando si hay informacion
-    comprobarEmail();
+    resetFormulario();
   });
+
+  function enviarEmail(e){
+    e.preventDefault();
+
+    spinner.classList.add('flex');
+    spinner.classList.remove('hidden');
+
+    setTimeout(() => {
+      spinner.classList.remove('flex');
+      spinner.classList.add('hidden');
+
+      resetFormulario();
+    }, 3000);
+
+  }
 
 
   //funcion para validar los campos y optimizar el codigo
@@ -108,14 +117,26 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function comprobarEmail() {
-    console.log(email);
-    if(Object.values(email).includes('')){
+
+     if(Object.values(email).includes('')){
       btnSubmmit.classList.add('opacity-50');
       btnSubmmit.disabled = true;
       return;
     }
     btnSubmmit.classList.remove('opacity-50');
     btnSubmmit.disabled = false;
+  }
 
+  function resetFormulario() {
+
+    //limpiando el objeto
+    email.email = '';
+    email.asunto = '';
+    email.mensaje = '';
+
+    formulario.reset();
+
+    //validando si hay informacion
+    comprobarEmail();
   }
 })
