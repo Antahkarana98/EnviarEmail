@@ -19,18 +19,23 @@ document.addEventListener('DOMContentLoaded', function () {
     //como saber si el campo ingresado esta vacio, trim es para eliminar espacios en blanco
     if(e.target.value.trim() === '') {
       alertaError(`El campo ${e.target.id} es obligatorio`, e.target.parentElement);
-    } else{
-      console.log("Tiene algo...");
+      // si se cumple esto sale de la funcion
+      return;
     }
+
+    if(e.target.id === 'email' && !validarEmail(e.target.value)){
+      alertaError('el email no es valido', e.target.parentElement);
+      return;
+    }
+
+    // necesita saber que alerta en especificio limpiar
+    limpiarAlerta(e.target.parentElement);
   }
 
   function alertaError(mensaje, referencia) {
-    //evitar que se generen alertas infinitas
-    const alerta = referencia.querySelector('.bg-red-600');
 
-    if(alerta){
-      alerta.remove();
-    }
+    limpiarAlerta(referencia);
+
     //Generamos alerta
     const error = document.createElement('P');
 
@@ -43,5 +48,20 @@ document.addEventListener('DOMContentLoaded', function () {
     //inyectando HTML en el formulario
 
     referencia.appendChild(error);
+  }
+
+  function limpiarAlerta(referencia){
+    //evitar que se generen alertas infinitas
+    const alerta = referencia.querySelector('.bg-red-600');
+
+    if(alerta){
+      alerta.remove();
+    }
+  }
+
+  function validarEmail(email) {
+    const regex =  /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/;
+    const resultado = regex.test(email);
+    return resultado;
   }
 })
