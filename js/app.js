@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     //comprobar el objeto email
 
-    comprobarEmail();
+    comprobarEmail(e.target.parentElement);
   }
 
   function alertaError(mensaje, referencia) {
@@ -135,8 +135,11 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function comprobarEmail() {
+    if(email.cc === ''){
+      email.cc = null;
+    }
 
-     if(Object.values(email).includes('')){
+    if(Object.values(email).includes('')){
       btnSubmmit.classList.add('opacity-50');
       btnSubmmit.disabled = true;
       return;
