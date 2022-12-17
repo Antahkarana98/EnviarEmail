@@ -3,7 +3,8 @@ document.addEventListener('DOMContentLoaded', function () {
   const email = {
     email: '',
     asunto: '',
-    mensaje: ''
+    mensaje: '',
+    cc: '',
   }
 
 
@@ -11,6 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const inputEmail = document.querySelector('#email');
   const inputAsunto = document.querySelector('#asunto');
   const inputMensaje = document.querySelector('#mensaje');
+  const inputCc = document.querySelector('#cc');
   const formulario = document.querySelector('#formulario');
   const btnSubmmit = document.querySelector('#formulario button[type="submit"]');
   const btnReset = document.querySelector('#formulario button[type="reset"]');
@@ -21,7 +23,10 @@ document.addEventListener('DOMContentLoaded', function () {
   inputEmail.addEventListener('input', validacion);
   inputAsunto.addEventListener('input', validacion);
   inputMensaje.addEventListener('input', validacion);
+  inputCc.addEventListener('input', validacion);
   formulario.addEventListener('submit', enviarEmail);
+
+ 
 
   btnReset.addEventListener('click', function(e){
     //prevenir la accion por defecto que en este caso es limpiar el formulario
@@ -59,9 +64,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
   //funcion para validar los campos y optimizar el codigo
   function validacion(e) {
-
     //como saber si el campo ingresado esta vacio, trim es para eliminar espacios en blanco
-    if(e.target.value.trim() === '') {
+    if(e.target.value.trim() === '' && e.target.id !== 'cc') {
 
       // Limpiar el valor por si eliminan un campo este quede vacio y comprobamos nuevamente
       email[e.target.name] = '';
@@ -70,9 +74,12 @@ document.addEventListener('DOMContentLoaded', function () {
       alertaError(`El campo ${e.target.id} es obligatorio`, e.target.parentElement);
       // si se cumple esto sale de la funcion
       return;
+    }else if(e.target.value.trim() === '' && e.target.id === 'cc') {
+      limpiarAlerta(e.target.parentElement);
+      return;
     }
 
-    if(e.target.id === 'email' && !validarEmail(e.target.value)){
+    if((e.target.id === 'email' || e.target.id === 'cc') && (!validarEmail(e.target.value))){
 
       // Limpiar el valor por si eliminan un campo este quede vacio y comprobamos nuevamente
       email[e.target.name] = '';
@@ -144,6 +151,7 @@ document.addEventListener('DOMContentLoaded', function () {
     email.email = '';
     email.asunto = '';
     email.mensaje = '';
+    email.cc = '';
 
     formulario.reset();
 
